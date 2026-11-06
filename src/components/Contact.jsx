@@ -10,6 +10,8 @@ import {
   MessageCircle,
   ArrowUpRight,
   CheckCircle2,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react'
 
 function Contact() {
@@ -20,10 +22,16 @@ function Contact() {
     message: '',
   })
 
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle')
+  const [statusMessage, setStatusMessage] = useState('')
 
-  // Replace with Seijuro's actual email address
-  const contactEmail = 'your.email@example.com'
+  // Replace with Seijuro's Web3Forms access key
+  const ACCESS_KEY = '43e121ae-bf53-4cce-9248-e1c1a3fe1ba2'
+
+  // Replace with Seijuro's actual contact information
+  const contactEmail = 'alissaheartp710@gmail.com'
+  const linkedIn = 'https://linkedin.com/in/alissa-heart-ponce-4ba890449'
+  const github = 'https://github.com/alissaheartp710'
 
   const handleChange = (e) => {
     setFormData({
@@ -31,23 +39,61 @@ function Contact() {
       [e.target.name]: e.target.value,
     })
 
-    setSubmitted(false)
+    setStatus('idle')
+    setStatusMessage('')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const subject = encodeURIComponent(formData.subject)
+    setStatus('loading')
+    setStatusMessage('Sending your message...')
 
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )
+    try {
+      const response = await fetch(
+        'https://api.web3forms.com/submit',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: ACCESS_KEY,
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            from_name: 'Alissa Heart Ponce Portfolio',
+          }),
+        }
+      )
 
-    const mailtoLink = `mailto:${contactEmail}?subject=${subject}&body=${body}`
+      const result = await response.json()
 
-    window.location.href = mailtoLink
+      if (result.success) {
+        setStatus('success')
+        setStatusMessage(
+          'Your message has been sent successfully! Thank you for reaching out.'
+        )
 
-    setSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        })
+      } else {
+        throw new Error(
+          result.message || 'Unable to send your message.'
+        )
+      }
+    } catch (error) {
+      setStatus('error')
+      setStatusMessage(
+        error.message || 'Something went wrong. Please try again.'
+      )
+    }
   }
 
   const contactDetails = [
@@ -61,13 +107,13 @@ function Contact() {
       icon: Globe,
       label: 'LinkedIn',
       value: 'Connect professionally',
-      href: 'https://www.linkedin.com/',
+      href: linkedIn,
     },
     {
       icon: Code2,
       label: 'GitHub',
       value: 'Explore my repositories',
-      href: 'https://github.com/',
+      href: github,
     },
   ]
 
@@ -76,8 +122,7 @@ function Contact() {
       id="contact"
       className="relative overflow-hidden bg-[#0b1220] px-6 py-24 lg:px-10"
     >
-      {/* Background Decoration */}
-      <div className="pointer-events-none absolute -right-40 top-20 h-96 w-96 rounded-full bg-sky-500/5 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 top-20 h-96 w-96 rounded-full bg-purple-500/5 blur-[120px]" />
 
       <div className="relative mx-auto max-w-7xl">
 
@@ -106,10 +151,9 @@ function Contact() {
           </p>
         </motion.div>
 
-        {/* Contact Content */}
         <div className="grid gap-10 lg:grid-cols-2">
 
-          {/* LEFT: Contact Information */}
+          {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -129,7 +173,6 @@ function Contact() {
               </p>
             </div>
 
-            {/* Contact Details */}
             <div className="space-y-4">
               {contactDetails.map((item) => {
                 const Icon = item.icon
@@ -165,7 +208,6 @@ function Contact() {
               })}
             </div>
 
-            {/* Availability */}
             <div className="flex items-center gap-3 border-t border-white/10 pt-6">
               <MapPin size={19} className="text-sky-400" />
 
@@ -175,7 +217,7 @@ function Contact() {
             </div>
           </motion.div>
 
-          {/* RIGHT: Contact Form */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -197,7 +239,7 @@ function Contact() {
                 </h3>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Fill out the form below to get in touch.
+                  Your message will be delivered to my email.
                 </p>
               </div>
             </div>
@@ -218,10 +260,11 @@ function Contact() {
                   type="text"
                   name="name"
                   required
+                  maxLength={100}
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your name"
-                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-sky-500"
+                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-500"
                 />
               </div>
 
@@ -239,10 +282,11 @@ function Contact() {
                   type="email"
                   name="email"
                   required
+                  maxLength={254}
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
-                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-sky-500"
+                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-500"
                 />
               </div>
 
@@ -260,10 +304,11 @@ function Contact() {
                   type="text"
                   name="subject"
                   required
+                  maxLength={150}
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="What is this regarding?"
-                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-sky-500"
+                  className="w-full rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-500"
                 />
               </div>
 
@@ -280,28 +325,55 @@ function Contact() {
                   id="message"
                   name="message"
                   required
+                  maxLength={5000}
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Write your message here..."
-                  className="w-full resize-none rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-sky-500"
+                  className="w-full resize-none rounded-lg border border-white/10 bg-[#080d1a] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-500"
                 />
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-sky-500 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+                disabled={status === 'loading'}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-sky-500 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-sky-400 hover:shadow-lg hover:shadow-purple-500/20 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send Message
-                <Send size={17} />
+                {status === 'loading' ? (
+                  <>
+                    Sending...
+                    <Loader2 size={17} className="animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send size={17} />
+                  </>
+                )}
               </button>
 
-              {submitted && (
-                <p className="flex items-center gap-2 text-xs text-emerald-400">
-                  <CheckCircle2 size={15} />
-                  Your email application should open with your message.
-                </p>
+              {/* Submission Feedback */}
+              {statusMessage && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`flex items-start gap-2 rounded-lg p-3 text-xs leading-6 ${
+                    status === 'success'
+                      ? 'bg-emerald-500/10 text-emerald-400'
+                      : status === 'error'
+                        ? 'bg-red-500/10 text-red-400'
+                        : 'bg-purple-500/10 text-purple-400'
+                  }`}
+                >
+                  {status === 'success' ? (
+                    <CheckCircle2 size={17} className="mt-1 shrink-0" />
+                  ) : (
+                    <AlertCircle size={17} className="mt-1 shrink-0" />
+                  )}
+
+                  {statusMessage}
+                </div>
               )}
             </form>
           </motion.div>

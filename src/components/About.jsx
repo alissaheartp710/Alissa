@@ -116,7 +116,7 @@ function About() {
             </h3>
 
             <p className="text-sm leading-8 text-slate-400 md:text-base">
-              I'm Seijuro Akatsuki, a Data Analyst passionate about
+              I'm Alissa Heart Ponce, a Data Analyst passionate about
               understanding data and uncovering the stories behind
               numbers. I enjoy exploring datasets, identifying
               meaningful patterns, and presenting information in

@@ -38,7 +38,7 @@ function Footer() {
 
               <div>
                 <h3 className="text-base font-bold tracking-wide text-white">
-                  SEIJURO AKATSUKI
+                  ALISSA HEART PONCE
                 </h3>
 
                 <p className="text-[10px] tracking-[0.25em] text-slate-500">
@@ -122,7 +122,7 @@ function Footer() {
         <div className="flex flex-col items-center justify-between gap-5 pt-8 text-center sm:flex-row sm:text-left">
 
           <p className="text-xs text-slate-500">
-            © {currentYear} Seijuro Akatsuki. All rights reserved.
+            © {currentYear} Alissa Heart Ponce. All rights reserved.
           </p>
 
           <p className="flex items-center gap-1.5 text-xs text-slate-500">

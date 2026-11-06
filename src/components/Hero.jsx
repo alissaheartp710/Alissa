@@ -90,9 +90,9 @@ function Hero() {
             </p>
 
             <h1 className="text-5xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl xl:text-7xl">
-              Seijuro
+              Alissa Heart
               <span className="block text-sky-400">
-                Akatsuki.
+                Ponce.
               </span>
             </h1>
 

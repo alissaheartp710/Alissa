@@ -5,6 +5,8 @@ import {
   X,
   BarChart3,
   ArrowUpRight,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
 const navLinks = [
@@ -16,7 +18,7 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ]
 
-function Navbar() {
+function Navbar({ isDark, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeMenu = () => setIsOpen(false)
@@ -25,7 +27,7 @@ function Navbar() {
     <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#080d1a]/90 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
 
-        {/* Logo / Branding */}
+        {/* Branding */}
         <a
           href="#home"
           onClick={closeMenu}
@@ -37,7 +39,7 @@ function Navbar() {
 
           <div>
             <h1 className="text-base font-bold tracking-wide text-white">
-              SEIJURO AKATSUKI
+              ALISSA HEART PONCE
             </h1>
 
             <p className="text-[10px] tracking-[0.25em] text-slate-400">
@@ -47,7 +49,7 @@ function Navbar() {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-5 xl:flex">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -59,30 +61,65 @@ function Navbar() {
           ))}
         </div>
 
-        {/* Desktop Contact Button */}
-        <a
-          href="#contact"
-          className="hidden shrink-0 items-center gap-2 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20 lg:flex"
-        >
-          Let's Talk
-          <ArrowUpRight size={16} />
-        </a>
+        {/* Desktop Actions */}
+        <div className="hidden items-center gap-3 lg:flex">
 
-        {/* Mobile Menu Toggle */}
-        <button
-          type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="rounded-lg border border-white/10 p-2 text-slate-300 transition-colors hover:bg-white/5 lg:hidden"
-          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={isOpen}
-          aria-controls="mobile-navigation"
-        >
-          {isOpen ? (
-            <X size={22} />
-          ) : (
-            <Menu size={22} />
-          )}
-        </button>
+          {/* Theme Toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={isDark ? 'Light Mode' : 'Dark Mode'}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-all hover:border-sky-500/40 hover:bg-sky-500/10 hover:text-sky-400"
+          >
+            {isDark ? (
+              <Sun size={19} />
+            ) : (
+              <Moon size={19} />
+            )}
+          </button>
+
+          {/* Contact Button */}
+          <a
+            href="#contact"
+            className="flex shrink-0 items-center gap-2 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+          >
+            Let's Talk
+            <ArrowUpRight size={16} />
+          </a>
+        </div>
+
+        {/* Mobile Actions */}
+        <div className="flex items-center gap-2 lg:hidden">
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:bg-white/5"
+          >
+            {isDark ? (
+              <Sun size={19} />
+            ) : (
+              <Moon size={19} />
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="rounded-lg border border-white/10 p-2 text-slate-300 transition-colors hover:bg-white/5"
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+          >
+            {isOpen ? (
+              <X size={22} />
+            ) : (
+              <Menu size={22} />
+            )}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Navigation */}
@@ -98,13 +135,12 @@ function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className="text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-sky-400"
+                className="text-sm font-medium text-slate-300 transition-colors hover:text-sky-400"
               >
                 {link.name}
               </a>
             ))}
 
-            {/* Mobile Contact Button */}
             <a
               href="#contact"
               onClick={closeMenu}
@@ -113,7 +149,6 @@ function Navbar() {
               Let's Talk
               <ArrowUpRight size={16} />
             </a>
-
           </div>
         </div>
       )}
