@@ -7,7 +7,7 @@ const certifications = [
     title: 'International Research Conference on Information Technology Education',
     organization: 'IRCITE 2024',
     date: 'March 8, 2024',
-    image: '/IRCITE Certificate.JPG',
+    image: '/IRCITE Certificate of Participation.png',
     description:
       'Participated in the International Research Conference on Information Technology Education, featuring global innovation, knowledge, engineering, and diversity-centered research.',
   },
@@ -16,7 +16,7 @@ const certifications = [
     title: 'Regional Assembly on Information Technology Education',
     organization: 'PSITE – Central Luzon | RAITE 2025',
     date: 'October 17, 2025',
-    image: '/PSITE Certificate.JPG',
+    image: '/RAITE 2025 Participation Certificate.png',
     description:
       'Participated in the regional assembly with the theme "I.T. Beyond Tomorrow: Shaping the Digital Frontier."',
   },
@@ -25,7 +25,7 @@ const certifications = [
     title: 'Regional Assembly on Information Technology Education',
     organization: 'PSITE – Central Luzon | RAITE 2026',
     date: 'October 2, 2026',
-    image: '/PSITE II Certificate.JPG',
+    image: '/RAITE 2026 Participation Certificate.png',
     description:
       'Participated in the regional assembly with the theme "CTRL + NEXT: Empowering Students as Future-Ready Digital Innovators and Technology Leaders."',
   },
