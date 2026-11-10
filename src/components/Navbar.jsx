@@ -15,6 +15,7 @@ const navLinks = [
   { name: 'Skills', href: '#skills' },
   { name: 'Projects', href: '#projects' },
   { name: 'Experience', href: '#experience' },
+  { name: 'Certifications', href: '#certifications' },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -72,11 +73,7 @@ function Navbar({ isDark, toggleTheme }) {
             title={isDark ? 'Light Mode' : 'Dark Mode'}
             className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-all hover:border-sky-500/40 hover:bg-sky-500/10 hover:text-sky-400"
           >
-            {isDark ? (
-              <Sun size={19} />
-            ) : (
-              <Moon size={19} />
-            )}
+            {isDark ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
           {/* Contact Button */}
@@ -92,19 +89,17 @@ function Navbar({ isDark, toggleTheme }) {
         {/* Mobile Actions */}
         <div className="flex items-center gap-2 lg:hidden">
 
+          {/* Mobile Theme Toggle */}
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition-colors hover:bg-white/5"
           >
-            {isDark ? (
-              <Sun size={19} />
-            ) : (
-              <Moon size={19} />
-            )}
+            {isDark ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
@@ -113,11 +108,7 @@ function Navbar({ isDark, toggleTheme }) {
             aria-expanded={isOpen}
             aria-controls="mobile-navigation"
           >
-            {isOpen ? (
-              <X size={22} />
-            ) : (
-              <Menu size={22} />
-            )}
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>
